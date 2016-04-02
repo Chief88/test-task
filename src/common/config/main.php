@@ -6,4 +6,9 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
     ],
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+        ],
+    ],
 ];
