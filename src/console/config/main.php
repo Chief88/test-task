@@ -21,5 +21,10 @@ return [
             ],
         ],
     ],
+    'modules' => [
+        'user' => [
+            'class' => 'amnah\yii2\user\Module',
+        ],
+    ],
     'params' => $params,
 ];

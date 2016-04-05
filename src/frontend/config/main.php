@@ -7,11 +7,21 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'forceTranslation' => true,
+                    'fileMap' => [
+                        'app' => 'app.php',
+                    ],
+                ],
+            ],
+        ],
 //        'user' => [
 //            'identityClass' => 'common\models\User',
 //            'enableAutoLogin' => true,
@@ -32,7 +42,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/' => 'site/index',
+                '/' => 'user/signup',
+                '<_a:(login|logout|signup|email-confirm|request-password-reset|password-reset)>' => 'user/<_a>',
                 '<_a:error>' => 'site/<_a>',
                 '<_a:\w+>' => 'site/<_a>',
                 '<_c:\w+>/<_a:\w+>' => '<_c>/<_a>',
@@ -40,10 +51,7 @@ return [
         ],
     ],
     'modules' => [
-        'user' => [
-            // following line will restrict access to admin controller from frontend application
-            'as frontend' => 'dektrium\user\filters\FrontendFilter',
-        ],
+
     ],
     'params' => $params,
 ];

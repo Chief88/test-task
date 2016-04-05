@@ -13,10 +13,6 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
-//        'user' => [
-//            'identityClass' => 'common\models\User',
-//            'enableAutoLogin' => true,
-//        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -41,10 +37,7 @@ return [
         ],
     ],
     'modules' => [
-        'user' => [
-            // following line will restrict access to profile, recovery, registration and settings controllers from backend
-            'as backend' => 'dektrium\user\filters\BackendFilter',
-        ],
+
     ],
     'params' => $params,
 ];
