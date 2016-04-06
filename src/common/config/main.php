@@ -1,6 +1,7 @@
 <?php
 return [
     'id' => 'Test task',
+    'name' => 'Test task',
     'language' => 'ru',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [

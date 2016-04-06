@@ -10,14 +10,13 @@ use yii\widgets\ListView;
 /* @var $model \frontend\models\form\SignupForm */
 /* @var $dataProvider \yii\data\ArrayDataProvider*/
 
-$this->title = 'Signup';
+$this->title = Yii::$app->name . ' | ' . Yii::t('app', 'Главная');
 ?>
 <div class="user-signup">
     <h1><?= Yii::t('app', 'Добро пожаловать'); ?>!</h1>
 
     <div class="row">
         <div class="col-md-5">
-            <!--            <p>--><?//= Yii::t('app', 'Заполните поля и отправьте форму для регистрации'); ?><!--:</p>-->
             <h3><?= Yii::t('app', 'Регистрация'); ?>:</h3>
 
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
@@ -40,14 +39,6 @@ $this->title = 'Signup';
                 'dataProvider' => $dataProvider,
                 'itemView' => '_userListItem',
                 'summary' => false,
-//                'separator' => '<hr>',
-//                'options' => [
-//                    'class' => 'list-news',
-//                ],
-//                'itemOptions' => [
-//                    'class' => 'row',
-//                    'tag' => 'article',
-//                ],
             ]); ?>
         </div>
     </div>

@@ -9,10 +9,12 @@ use common\models\form\PasswordResetForm;
 use common\models\User;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
+use frontend\components\FrontController as Controller;
 use Yii;
 use yii\web\Response;
 use yii\data\ArrayDataProvider;
+use yii\web\BadRequestHttpException;
+use yii\base\InvalidParamException;
 
 class UserController extends Controller
 {
@@ -90,7 +92,10 @@ class UserController extends Controller
 		}
 
 		$models = User::find()
-			->andWhere('status = :status', [':status' => User::STATUS_ACTIVE])
+			->andWhere('status = :status AND role = :role', [
+				':status' => User::STATUS_ACTIVE,
+				':role' => User::ROLE_USER
+			])
 			->orderBy('id DESC')->all();
 
 		$dataProvider = new ArrayDataProvider([

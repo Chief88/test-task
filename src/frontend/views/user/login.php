@@ -6,10 +6,11 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\form\LoginForm */
 
-$this->title = Yii::$app->name;
+$this->title = Yii::$app->name . ' | ' . Yii::t('app', 'Авторизация');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Авторизация');
 ?>
 <div class="user-user-login">
-	<h1><?= Html::encode($this->title) ?> - <?= Yii::t('app', 'личный кабинет оптовика') ?></h1>
+	<h1><?= Yii::t('app', 'Авторизация') ?></h1>
 
 	<div class="row">
 		<div class="col-sm-5">
@@ -52,20 +53,6 @@ $this->title = Yii::$app->name;
 					</div>
 
 					<?php ActiveForm::end(); ?>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="col-sm-7">
-
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title"><?= Yii::t('app', 'Регистрация') ?></h3>
-				</div>
-
-				<div class="panel-body">
-					---
 				</div>
 			</div>
 

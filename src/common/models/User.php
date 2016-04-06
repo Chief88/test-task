@@ -91,9 +91,9 @@ class User extends ActiveRecord implements IdentityInterface
             'role' => Yii::t('app', 'Роль'),
             'status' => Yii::t('app', 'Статус'),
             'auth_key' => Yii::t('app', 'Ключ авторизации'),
-            'email_confirm_token' => Yii::t('app', 'Знак подтверждения E-mail'),
+            'email_confirm_token' => Yii::t('app', 'Токен подтверждения E-mail'),
             'password_hash' => Yii::t('app', 'Хэш пароля'),
-            'password_reset_token' => Yii::t('app', 'Знак сброса пароля'),
+            'password_reset_token' => Yii::t('app', 'Токен сброса пароля'),
         ];
     }
 
