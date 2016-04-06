@@ -79,7 +79,7 @@ class UserController extends Controller
 	/**
 	 * @return string|Response
 	 */
-	public function actionSignup()
+	public function actionIndex()
 	{
 		$model = new SignupForm();
 		if ($model->load(Yii::$app->request->post())) {
@@ -100,7 +100,7 @@ class UserController extends Controller
 			],
 		]);
 
-		return $this->render('signup', [
+		return $this->render('index', [
 			'model' => $model,
 			'dataProvider' => $dataProvider,
 		]);

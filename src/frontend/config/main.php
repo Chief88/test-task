@@ -42,8 +42,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/' => 'user/signup',
-                '<_a:(login|logout|signup|email-confirm|request-password-reset|password-reset)>' => 'user/<_a>',
+                '/' => 'user/index',
+                '<_a:(login|logout|email-confirm|request-password-reset|password-reset)>' => 'user/<_a>',
                 '<_a:error>' => 'site/<_a>',
                 '<_a:\w+>' => 'site/<_a>',
                 '<_c:\w+>/<_a:\w+>' => '<_c>/<_a>',
