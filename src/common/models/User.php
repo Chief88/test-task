@@ -107,6 +107,10 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    /**
+     * @param $username
+     * @return bool
+     */
     public static function isUserAdmin($username)
     {
         if (static::findOne(['username' => $username, 'role' => self::ROLE_ADMIN]))

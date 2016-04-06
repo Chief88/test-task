@@ -29,7 +29,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/' => 'site/index',
+                '/' => 'user/index',
+                '<_a:(login|logout|email-confirm|request-password-reset|password-reset)>' => 'user/<_a>',
                 '<_a:error>' => 'site/<_a>',
                 '<_a:\w+>' => 'site/<_a>',
                 '<_c:\w+>/<_a:\w+>' => '<_c>/<_a>',
