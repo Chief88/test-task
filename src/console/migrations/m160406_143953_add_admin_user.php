@@ -7,9 +7,7 @@ class m160406_143953_add_admin_user extends Migration
 {
 	public function safeUp()
 	{
-		$this->insert(
-			'user',
-			[
+		$this->insert('{{%user}}', [
 				'username' => 'admin',
 				'role' => User::ROLE_ADMIN,
 				'auth_key' => '100500',
@@ -20,5 +18,10 @@ class m160406_143953_add_admin_user extends Migration
 				'updated_at' => time(),
 			]
 		);
+	}
+
+	public function safeDown()
+	{
+		$this->delete('{{%user}}', ['username' => 'admin']);
 	}
 }
