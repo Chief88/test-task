@@ -4,7 +4,6 @@ namespace backend\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use backend\components\BackendController as Controller;
-use common\models\LoginForm;
 use yii\filters\VerbFilter;
 
 /**
