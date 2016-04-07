@@ -2,7 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\form\LoginForm;
-use frontend\models\form\SignupForm;
+use common\models\form\SignupForm;
 use common\models\form\EmailConfirmForm;
 use common\models\form\PasswordResetRequestForm;
 use common\models\form\PasswordResetForm;
@@ -84,6 +84,7 @@ class UserController extends Controller
 	public function actionIndex()
 	{
 		$model = new SignupForm();
+		$model->setScenario('user');
 		if ($model->load(Yii::$app->request->post())) {
 			if ($user = $model->signup()) {
 				Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Подтвердите ваш e-mail адрес.'));

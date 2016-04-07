@@ -1,24 +1,39 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ListView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $dataProvider \yii\data\ArrayDataProvider*/
+/* @var $searchModel \backend\models\UserSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::$app->name . ' | ' . Yii::t('app', 'Главная');
+$this->title = Yii::t('app', 'Пользователи');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-signup">
-    <h1><?= Yii::t('app', 'Добро пожаловать'); ?>!</h1>
+<div class="user-index">
 
-    <div class="row">
-        <div class="col-md-12">
-            <h3><?= Yii::t('app', 'Наши пользователи')?>:</h3>
-            <?= ListView::widget([
-                'dataProvider' => $dataProvider,
-                'itemView' => '_userListItem',
-                'summary' => false,
-            ]); ?>
-        </div>
-    </div>
+	<h1><?= Html::encode($this->title) ?></h1>
+
+	<p>
+		<?= Html::a(Yii::t('app', 'Добавить пользователя'), ['create'], ['class' => 'btn btn-success']) ?>
+	</p>
+
+	<?= GridView::widget([
+		'dataProvider' => $dataProvider,
+		'filterModel' => $searchModel,
+		'columns' => [
+			['class' => 'yii\grid\SerialColumn'],
+
+			'id',
+			'username',
+			'email:email',
+			'status',
+			'role',
+			'created_at',
+			'updated_at',
+
+			['class' => 'yii\grid\ActionColumn'],
+		],
+	]); ?>
+
 </div>

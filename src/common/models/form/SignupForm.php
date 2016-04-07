@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models\form;
+namespace common\models\form;
 
 use common\models\User;
 use yii\base\Model;
@@ -33,7 +33,7 @@ class SignupForm extends Model
 			['password', 'required'],
 			['password', 'string', 'min' => 6],
 
-			['verifyCode', 'captcha', 'captchaAction' => '/user/captcha'],
+			['verifyCode', 'captcha', 'captchaAction' => '/user/captcha', 'on' => 'user'],
 		];
 	}
 
@@ -67,7 +67,7 @@ class SignupForm extends Model
 			$user->generateEmailConfirmToken();
 
 			if ($user->save()) {
-				Yii::$app->mailer->compose('emailConfirm', ['user' => $user])
+				Yii::$app->mailer->compose('emailConfirm', ['user' => $user, 'password' => $this->password])
 					->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
 					->setTo($this->email)
 					->setSubject('Email confirmation for ' . Yii::$app->name)
