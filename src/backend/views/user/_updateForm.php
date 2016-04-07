@@ -4,33 +4,37 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\user\models\User */
+/* @var $model \common\models\User */
 /* @var $form yii\widgets\ActiveForm */
-
-/*** Var dump ***/
-//echo '<pre>'; var_dump($model->getRoleArray()); echo '</pre>';
-//die('die');
-/*** End var dump ***/
 
 ?>
 
 <div class="user-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+	<?php $form = ActiveForm::begin(); ?>
+	<?= $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+	<div class="row">
+		<div class="col-md-6">
+			<?= $form->field($model, 'status')->dropDownList($model->getStatusesArray()); ?>
+			<?= $form->field($model, 'role')->dropDownList($model->getRoleArray()); ?>
+		</div>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+		<div class="col-md-6">
+			<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+			<?= $form->field($model, 'newPassword')->passwordInput(['maxlength' => true])
+				->label(Yii::t('app', 'Сменить пароль')) ?>
+		</div>
+	</div>
 
-    <?= $form->field($model, 'role')->dropDownList($model->getRoleArray()); ?>
-    <?= $form->field($model, 'status')->dropDownList($model->getStatusesArray()); ?>
+	<?= $form->field($model, 'username')->hiddenInput()->label(false); ?>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord
-            ? Yii::t('app', 'Create')
-            : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+	<div class="form-group">
+		<?= Html::submitButton($model->isNewRecord
+			? Yii::t('app', 'Создать')
+			: Yii::t('app', 'Обновить'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	</div>
 
-    <?php ActiveForm::end(); ?>
+	<?php ActiveForm::end(); ?>
 
 </div>

@@ -101,13 +101,41 @@ class UserController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['view', 'id' => $model->id]);
-		} else {
-			return $this->render('update', [
-				'model' => $model,
-			]);
+		$post = Yii::$app->request->post();
+		if ($model->load($post)) {
+			$isPasswordUpdate = false;
+			$isEmailUpdate = false;
+			if (!empty($post['User']['newPassword'])) {
+				$model->setPassword($post['User']['newPassword']);
+				$isPasswordUpdate = true;
+			}
+
+			if ($model->getOldAttribute('email') != $post['User']['email']) {
+				$model->generateEmailConfirmToken();
+				$model->status = User::STATUS_WAIT;
+				$isEmailUpdate = true;
+			}
+
+			if ($model->save()) {
+				if ($isPasswordUpdate || $isEmailUpdate) {
+					Yii::$app->mailer->compose('accountUpdated', [
+						'isPasswordUpdate' => $isPasswordUpdate,
+						'isEmailUpdate' => $isEmailUpdate,
+						'user' => $model,
+						'password' => $post['User']['newPassword']
+					])->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
+						->setTo($model->email)
+						->setSubject('Обновлены данные аккаунта на ' . Yii::$app->name)
+						->send();
+				}
+
+				return $this->redirect(['index']);
+			}
 		}
+
+		return $this->render('update', [
+			'model' => $model,
+		]);
 	}
 
 	/**
