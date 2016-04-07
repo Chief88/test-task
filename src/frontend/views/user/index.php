@@ -38,8 +38,17 @@ $this->title = Yii::$app->name . ' | ' . Yii::t('app', 'Главная');
             <?= ListView::widget([
                 'dataProvider' => $dataProvider,
                 'itemView' => '_userListItem',
+                'itemOptions' => [
+                    'class' => 'list-group-item',
+                    'tag' => 'li'
+                ],
+                'options' => [
+                    'class' => 'list-group',
+                    'tag' => 'ul'
+                ],
                 'summary' => false,
             ]); ?>
+
         </div>
     </div>
 </div>
