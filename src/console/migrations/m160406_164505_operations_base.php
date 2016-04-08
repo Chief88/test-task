@@ -13,8 +13,8 @@ class m160406_164505_operations_base extends Migration
 
         $this->createTable('{{%operations}}', [
             'id' => $this->primaryKey(),
-            'sender_id' => $this->integer()->notNull(),
-            'recipient_id' => $this->integer()->notNull(),
+            'sender_bill_id' => $this->integer()->notNull(),
+            'recipient_bill_id' => $this->integer()->notNull(),
             'amount' => $this->float()->notNull()->defaultValue(0),
             'created_at' => $this->integer()->notNull(),
             'updated_ad' => $this->integer()->notNull(),

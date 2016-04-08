@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\User;
+use kartik\date\DatePicker;
+use kartik\field\FieldRange;
 
 /* @var $this yii\web\View */
 /* @var $searchModel \backend\models\UserSearch */
@@ -29,6 +31,59 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Пользователи');
 			'username',
 			'email:email',
 			[
+				'attribute' => 'bills.balance',
+				'value' => function ($model, $index, $dataColumn) {
+					/** @var $model \common\models\User */
+					return $model->balance . ' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span>';
+				},
+				'format' => 'raw',
+				'filter' => FieldRange::widget([
+					'model' => $searchModel,
+					'attribute1' => 'balance_from',
+					'attribute2' => 'balance_to',
+					'options1' => ['placeholder' => Yii::t('app', 'От')],
+					'options2' => ['placeholder' => Yii::t('app', 'До')],
+					'template' => '{widget}{error}',
+					'separator' => '-',
+				]),
+			],
+			[
+				'attribute' => 'role',
+				'value' => function ($model, $index, $dataColumn) {
+					/** @var $model \common\models\User */
+					switch($model->role){
+						case User::ROLE_ADMIN:
+							$label = '<span class="label label-primary">' . $model->getRoleName() . '</span>';
+							break;
+						default:
+							$label = '<span class="label label-default">' . $model->getRoleName() . '</span>';
+					}
+					return $label;
+				},
+				'format' => 'raw',
+				'filter' => Html::activeDropDownList($searchModel, 'role',
+					$searchModel->getRoleArray(),
+					[
+						'prompt' => Yii::t('app', '-- Любая --'),
+						'class' => 'form-control',
+					])
+			],
+			[
+				'attribute' => 'created_at',
+				'value' => function ($model, $index, $dataColumn) {
+					/** @var $model \common\models\User */
+					return date('Y.m.d H:i:s', $model->created_at);
+				},
+				'filter' => DatePicker::widget([
+					'model' => $searchModel,
+					'attribute' => 'date_from',
+					'attribute2' => 'date_to',
+					'type' => DatePicker::TYPE_RANGE,
+					'separator' => '-',
+					'pluginOptions' => ['format' => 'yyyy-mm-dd']
+				]),
+			],
+			[
 				'attribute' => 'status',
 				'value' => function ($model, $index, $dataColumn) {
 					/** @var $model \common\models\User */
@@ -51,28 +106,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Пользователи');
 						'prompt' => Yii::t('app', '-- Любой --'),
 						'class' => 'form-control',
 					])
-			],
-			[
-				'attribute' => 'role',
-				'value' => function ($model, $index, $dataColumn) {
-					/** @var $model \common\models\User */
-					switch($model->role){
-						case User::ROLE_ADMIN:
-							$label = '<span class="label label-primary">' . $model->getRoleName() . '</span>';
-							break;
-						default:
-							$label = '<span class="label label-default">' . $model->getRoleName() . '</span>';
-					}
-					return $label;
-				},
-				'format' => 'raw',
-			],
-			[
-				'attribute' => 'created_at',
-				'value' => function ($model, $index, $dataColumn) {
-					/** @var $model \common\models\User */
-					return date('Y.m.d H:i:s', $model->created_at);
-				},
 			],
 
 			['class' => 'yii\grid\ActionColumn'],

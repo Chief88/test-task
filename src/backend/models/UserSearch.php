@@ -12,14 +12,21 @@ use common\models\User;
  */
 class UserSearch extends User
 {
+	public $date_from;
+	public $date_to;
+	public $balance_from;
+	public $balance_to;
+
 	/**
 	 * @inheritdoc
 	 */
 	public function rules()
 	{
 		return [
-			[['id', 'created_at', 'updated_at', 'status'], 'integer'],
-			[['created_at', 'updated_at', 'username', 'email'], 'safe'],
+			[['id', 'role', 'created_at', 'updated_at', 'status'], 'integer'],
+			[['date_from', 'date_to'], 'date', 'format' => 'php:Y-m-d'],
+			[['balance_from', 'balance_to', 'bills.balance'], 'number'],
+			[['bills.balance', 'created_at', 'updated_at', 'username', 'email'], 'safe'],
 		];
 	}
 
@@ -33,6 +40,14 @@ class UserSearch extends User
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	public function attributes() {
+		// add related fields to searchable attributes
+		return array_merge(parent::attributes(), ['bills.balance']);
+	}
+
+	/**
 	 * Creates data provider instance with search query applied
 	 *
 	 * @param array $params
@@ -41,12 +56,23 @@ class UserSearch extends User
 	 */
 	public function search($params)
 	{
-		$query = User::find();
+		$query = User::find()->alias('t');
+		$query->joinWith('bills');
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 			'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]]
 		]);
+
+		$addSortAttributes = [
+			'bills.balance',
+		];
+		foreach ($addSortAttributes as $addSortAttribute) {
+			$dataProvider->sort->attributes[$addSortAttribute] = [
+				'asc' => [$addSortAttribute => SORT_ASC],
+				'desc' => [$addSortAttribute => SORT_DESC],
+			];
+		}
 
 		$this->load($params);
 
@@ -58,8 +84,7 @@ class UserSearch extends User
 
 		$query->andFilterWhere([
 			'id' => $this->id,
-			'created_at' => $this->created_at,
-			'updated_at' => $this->updated_at,
+			't.role' => $this->role,
 			'status' => $this->status,
 		]);
 
@@ -68,7 +93,11 @@ class UserSearch extends User
 			->andFilterWhere(['like', 'email_confirm_token', $this->email_confirm_token])
 			->andFilterWhere(['like', 'password_hash', $this->password_hash])
 			->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-			->andFilterWhere(['like', 'email', $this->email]);
+			->andFilterWhere(['like', 'email', $this->email])
+			->andFilterWhere(['>=', 't.created_at', $this->date_from ? strtotime($this->date_from . ' 00:00:00') : null])
+			->andFilterWhere(['<=', 't.created_at', $this->date_to ? strtotime($this->date_to . ' 23:59:59') : null])
+			->andFilterWhere(['>=', 'bills.balance', $this->balance_from ? $this->balance_from : null])
+			->andFilterWhere(['<=', 'bills.balance', $this->balance_to ? $this->balance_to : null]);
 
 		return $dataProvider;
 	}
