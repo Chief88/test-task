@@ -2,7 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\form\LoginForm;
-use common\models\form\SignupForm;
+use frontend\models\form\SignupForm;
 use common\models\form\EmailConfirmForm;
 use common\models\form\PasswordResetRequestForm;
 use common\models\form\PasswordResetForm;

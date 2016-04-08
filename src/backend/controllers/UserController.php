@@ -2,7 +2,7 @@
 namespace backend\controllers;
 
 use common\models\form\LoginForm;
-use common\models\form\SignupForm;
+use backend\models\form\SignupForm;
 use common\models\User;
 use backend\models\UserSearch;
 use backend\components\BackendController as Controller;

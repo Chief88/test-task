@@ -2,9 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\models\User;
 
 /* @var $this yii\web\View */
-/* @var $model \common\models\User */
+/* @var $model \backend\models\form\SignupForm */
 /* @var $form yii\widgets\ActiveForm */
 
 
@@ -23,6 +24,7 @@ use yii\widgets\ActiveForm;
 		</div>
 		<div class="col-md-6">
 			<?= $form->field($model, 'password')->passwordInput() ?>
+			<?= $form->field($model, 'role')->dropDownList(User::getRoleArray()); ?>
 		</div>
 	</div>
 
