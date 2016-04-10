@@ -9,6 +9,7 @@ use backend\components\BackendController as Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Response;
 
 class UserController extends Controller
@@ -50,6 +51,7 @@ class UserController extends Controller
 	 */
 	public function actionIndex()
 	{
+		Url::remember();
 		$searchModel = new UserSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

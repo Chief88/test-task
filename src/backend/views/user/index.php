@@ -108,7 +108,18 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Пользователи');
 					])
 			],
 
-			['class' => 'yii\grid\ActionColumn'],
+			[
+				'class' => 'yii\grid\ActionColumn',
+				'template'=> '<div style="min-width: 80px">{update}&nbsp;{enrollMoney}&nbsp;{transferMoney}</div>',
+				'buttons' => [
+					'enrollMoney' => function ($url, $model, $key) {
+						return $this->render('_enrollModal', ['model' => $model]);
+					},
+					'transferMoney' => function ($url, $model, $key) {
+						return $this->render('_transferModal', ['model' => $model]);
+					},
+				]
+			]
 		],
 	]); ?>
 

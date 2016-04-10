@@ -104,6 +104,7 @@ a.desc:after {
     text-decoration: none;
 }
 
+.operation-index .grid-view td,
 .user-index .grid-view td {
     max-width: 300px;
 }

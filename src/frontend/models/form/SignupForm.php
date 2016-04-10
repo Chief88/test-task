@@ -46,6 +46,7 @@ class SignupForm extends Model
 			'email' => Yii::t('app', 'E-mail'),
 			'username' => Yii::t('app', 'Nickname'),
 			'password' => Yii::t('app', 'Пароль'),
+			'verifyCode' => Yii::t('app', 'Проверочный код'),
 		];
 	}
 

@@ -1,54 +1,27 @@
 <?php
 
-use yii\captcha\Captcha;
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use yii\widgets\ListView;
-
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\form\SignupForm */
-/* @var $dataProvider \yii\data\ArrayDataProvider*/
 
-$this->title = Yii::$app->name . ' | ' . Yii::t('app', 'Главная');
+$this->title = Yii::$app->name . ' | ' . Yii::t('app', 'Личный кабинет');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Личный кабинет');
+$user = Yii::$app->user->identity;
 ?>
 <div class="user-signup">
-    <h1><?= Yii::t('app', 'Добро пожаловать'); ?>!</h1>
+	<h1><?= $user->username; ?></h1>
 
-    <div class="row">
-        <div class="col-md-5">
-            <h3><?= Yii::t('app', 'Регистрация'); ?>:</h3>
+	<div class="row">
+		<div class="col-md-6">
+			<p><strong>E-mail</strong>: <?= $user->email; ?></p>
+			<p>
+				<strong><?= Yii::t('app', 'Баланс'); ?></strong>: <span class="badge"><?= $user->balance; ?> <span
+						class="glyphicon glyphicon-rub" aria-hidden="true"></span></span>
+			</p>
+		</div>
 
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-            <?= $form->field($model, 'username') ?>
-            <?= $form->field($model, 'email') ?>
-            <?= $form->field($model, 'password')->passwordInput() ?>
-            <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                'captchaAction' => '/user/captcha',
-                'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-            ]) ?>
-            <div class="form-group">
-                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-            </div>
-            <?php ActiveForm::end(); ?>
-        </div>
+		<div class="col-md-3">
+			<h3><?= Yii::t('app', 'История операций') ?>:</h3>
 
-        <div class="col-md-7">
-            <h3><?= Yii::t('app', 'Наши пользователи')?>:</h3>
-            <?= ListView::widget([
-                'dataProvider' => $dataProvider,
-                'itemView' => '_userListItem',
-                'itemOptions' => [
-                    'class' => 'list-group-item',
-                    'tag' => 'li'
-                ],
-                'options' => [
-                    'class' => 'list-group',
-                    'tag' => 'ul'
-                ],
-                'summary' => false,
-            ]); ?>
-
-        </div>
-    </div>
+		</div>
+	</div>
 </div>

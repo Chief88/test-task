@@ -11,7 +11,7 @@ class m160408_174338_fill_user_and_bill_admin extends Migration
         $this->insert('{{%user}}', [
                 'username' => 'admin',
                 'role' => User::ROLE_ADMIN,
-                'auth_key' => '100500',
+                'auth_key' => Yii::$app->security->generateRandomString(),
                 'password_hash' => Yii::$app->getSecurity()->generatePasswordHash('123456'),
                 'email' => 'serg.latyshkov@gmail.com',
                 'status' => User::STATUS_ACTIVE,

@@ -2,7 +2,6 @@
 namespace frontend\controllers;
 
 use common\models\form\LoginForm;
-use frontend\models\form\SignupForm;
 use common\models\form\EmailConfirmForm;
 use common\models\form\PasswordResetRequestForm;
 use common\models\form\PasswordResetForm;
@@ -11,8 +10,8 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use frontend\components\FrontController as Controller;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Response;
-use yii\data\ArrayDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\base\InvalidParamException;
 
@@ -83,33 +82,11 @@ class UserController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model = new SignupForm();
-		$model->setScenario('user');
-		if ($model->load(Yii::$app->request->post())) {
-			if ($user = $model->signup()) {
-				Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Подтвердите ваш e-mail адрес.'));
-				return $this->goHome();
-			}
+		if (Yii::$app->user->isGuest) {
+			return $this->goHome();
 		}
 
-		$models = User::find()
-			->andWhere('status = :status AND role = :role', [
-				':status' => User::STATUS_ACTIVE,
-				':role' => User::ROLE_USER
-			])
-			->orderBy('id DESC')->all();
-
-		$dataProvider = new ArrayDataProvider([
-			'allModels' => $models,
-			'pagination' => [
-				'pageSize' => 5,
-			],
-		]);
-
-		return $this->render('index', [
-			'model' => $model,
-			'dataProvider' => $dataProvider,
-		]);
+		return $this->render('index');
 	}
 
 	/**
