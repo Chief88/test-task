@@ -9,7 +9,9 @@ git clone https://github.com/Chief88/test-task.git project
 cd project/
 php src/init --env=Development --overwrite=All
 ~~~
-Создаем базу данных. 
+
+Устанавливаем зависимости композера.
+Создаем базу данных.
 Редактируем файлы src/common/config/main-local.php и src/console/config/main-local.php
 Примеры для данных файлов src/common/config/main-local-example.php и  src/console/config/main-local-example.php
 
