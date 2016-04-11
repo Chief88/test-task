@@ -1,4 +1,4 @@
-init: migrate-up
+init: migrate-up fill-data
 
 fill-data: create-users create-operation
 
